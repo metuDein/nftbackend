@@ -25,7 +25,24 @@ const newRequest = async(req, res) => {
     res.status(200).json({message : 'request successful'});
 }
 
+const deleteMessage = async(req, res) => {
+    const { id } = req.body;
+
+    if(!id) return res.status(400).json({message : 'id required'});
+
+    const message = await RequestMessage.findOne({_id : id}).exec();
+
+    if(!message) return res.status(204).json({message : 'message not found'});
+
+    const result =  await RequestMessage.deleteOne({ _id : id});
+
+    if(!result) return res.status(400).json({message : 'delete failed'});
+    
+    res.status(200).json({message : 'delete successful'});
+}
+
 
 module.exports = {
-    newRequest
+    newRequest,
+    deleteMessage,
 }

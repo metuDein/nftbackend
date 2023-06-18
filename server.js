@@ -68,6 +68,7 @@ app.use('/userassets', require('./routes/api/userApi/userAssets'));
 app.use('/userdeleteasset', require('./routes/api/userApi/userassetdelete'));
 app.use('/useraccount', require('./routes/api/userApi/useraccount'));
 app.use('/supportrequest', require('./routes/api/userApi/usersupportrequest'));
+app.use('/deletemessage', require('./routes/api/userApi/userDeleteMessage'));
 
 
 // admin api
