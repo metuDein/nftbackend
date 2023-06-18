@@ -17,7 +17,7 @@ const newRequest = async(req, res) => {
 
     if(req?.body?.image) newRequest.image = req.body.image
     if(req?.body.itemName) newRequest.asset = req.body.itemName
-    if(req?.body.reciever) newRequest.reciever = req.body.reciever
+    if(req?.body?.receiver) newRequest.reciever = req.body.receiver
 
     const result = await newRequest.save();
 
