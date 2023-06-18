@@ -6,7 +6,7 @@ const RequestMessages = require('../model/RequestMessages');
 
 
 const getAlltrendingAssets = async (req, res) => {
-    const trendingAssets = await Assets.find().limit(8);
+    const trendingAssets = await Assets.find({ trending : true });
     if(!trendingAssets) return res.status(204).json({ message : 'no data found' });
     
     res.status(200).json({trendingAssets})
