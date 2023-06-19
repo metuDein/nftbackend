@@ -50,11 +50,24 @@ const getAllUsers = async(req, res) => {
     res.status(200).json({users});
 }
 
+const getAsset = async(req, res) => {
+    const { id } = req.params;
+
+    if(!id)  return  res.status(200).json({message : 'no id found'});
+
+    const asset = await Assets.findOne({ _id : id}).exec();
+
+    if(!asset) return res.status(200).json({message : 'no id found'});
+
+    res.status(200).json({asset});
+}
+
 module.exports = {
     getAlltrendingAssets,
     getHompageData,
     getAllAssets,
     getAllCartItems,
     getAllMessage,
-    getAllUsers
+    getAllUsers,
+    getAsset
 }
