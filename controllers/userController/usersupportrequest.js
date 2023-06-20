@@ -15,7 +15,18 @@ const newRequest = async(req, res) => {
 
     if(!newRequest) return res.status(400).json({message : 'request failed'});
 
-    if(req?.body?.image) newRequest.image = req.body.image
+    if(req?.body?.image){
+        let uploadImage;
+
+        uploadImage =  cloudinary.uploader.upload(req.body?.image,
+            { public_id: "nftart" }, 
+            function(error, result) { return (result.secure_url);
+            });
+
+       
+       
+        newRequest.image = uploadImage
+        }
     if(req?.body.itemName) newRequest.asset = req.body.itemName
     if(req?.body?.receiver) newRequest.reciever = req.body.receiver
 

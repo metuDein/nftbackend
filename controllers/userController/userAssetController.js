@@ -1,5 +1,20 @@
 const Assets = require('../../model/Assets');
 
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key:  process.env.API_KEY, 
+    api_secret: process.env.API_SECRET
+  });
+
+
+  const opts = {
+    overwrite : true,
+    invalidate : true,
+    resource_type :"auto"
+  }
+
 
 const createNewAsset = async (req, res) => {
     const { image, name, price, desc, supply, blockchain, category, ownername } = req.body;
@@ -7,11 +22,18 @@ const createNewAsset = async (req, res) => {
     if(!image || !name || !price || !desc || !supply || !blockchain || !category || !ownername) return res.status(400).json({message : 'all field required'});
 
     const duplicateAsset = await Assets.findOne({ image : image }).exec();
-
+    
     if(!duplicateAsset){
-        
+    let uploadImage;
 
-        const result = await Assets.create({image : image, name : name, price : price, description : desc, block_number_minted : supply, blockChain : blockchain, categories : category, OwnerName : ownername });
+        uploadImage =  cloudinary.uploader.upload(req.body?.image,
+            { public_id: "nftart" }, 
+            function(error, result) { return (result.secure_url);
+            });
+        
+            if(!uploadImage) return res.status(400).json({message : 'image upload failed'});
+
+        const result = await Assets.create({image : uploadImage, name : name, price : price, description : desc, block_number_minted : supply, blockChain : blockchain, categories : category, OwnerName : ownername });
 
         if(!result) return res.status(400).json({message : 'item creation failed'});
 
@@ -31,7 +53,16 @@ const editAsset = async (req, res) => {
 
     if (!asset) return res.status(204).json({message : 'no asset found'});
 
-    if (req.body?.image) asset.image = req.body.image
+    if (req.body?.image) {
+        let uploadImage;
+
+        uploadImage =  cloudinary.uploader.upload(req.body?.image,
+            { public_id: "nftart" }, 
+            function(error, result) { return (result.secure_url);
+            });
+
+        asset.image = uploadImage     
+    }
     if (req.body?.name) asset.name = req.body.name
     if (req.body?.price) asset.price = req.body.price
     if (req.body?.desc) asset.description = req.body.desc

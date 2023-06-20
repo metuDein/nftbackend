@@ -82,7 +82,8 @@ app.use('/admindeleteusers', require('./routes/api/adminApi/adminUserDelete'));
 app.use('/addtocart', require('./routes/api/userApi/usercart'));
 
 
-
+// test route
+app.use('/imageupload', require('./routes/imageUpload'));
 
 
 app.all('*', (req, res) => {

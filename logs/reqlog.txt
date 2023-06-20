@@ -2499,3 +2499,5 @@
 2023-06-18	20:51:29	88a0bf36-5236-42d3-a6c1-b530ff7067d7	GET	/homepagedata	[object Object]
 2023-06-18	20:53:22	d226747c-0802-4d71-bdb9-a945224d6e4f	GET	/getallassets	[object Object]
 2023-06-18	20:53:41	1a243014-a6ba-4004-8c25-7c8d42a0d8c8	GET	/getallassets	[object Object]
+2023-06-20	00:47:25	f457e96d-10ef-4251-b8a5-b919a852ff66	POST	/imageupload	[object Object]
+2023-06-20	00:52:17	2d7aaca9-3f52-4a02-a92b-f2da7d0b8e59	POST	/imageupload	[object Object]
