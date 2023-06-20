@@ -26,9 +26,11 @@ const createNewAsset = async (req, res) => {
     if(!duplicateAsset){
     let uploadImage;
 
-        uploadImage =  await cloudinary.uploader.upload(req.body?.image,
+        await cloudinary.uploader.upload(req.body?.image,
             { public_id: "nftart" }, 
-            function(error, result) { return (result.secure_url);
+            function(error, result) { 
+                console.log(result.secure_url);
+                return uploadImage = result.secure_url
             });
         
             if(!uploadImage) return res.status(400).json({message : 'image upload failed'});
@@ -56,10 +58,13 @@ const editAsset = async (req, res) => {
     if (req.body?.image) {
         let uploadImage;
 
-        uploadImage = await cloudinary.uploader.upload(req.body?.image,
+        await cloudinary.uploader.upload(req.body?.image,
             { public_id: "nftart" }, 
-            function(error, result) { return (result.secure_url);
+            function(error, result) { 
+                console.log(result.secure_url);
+                return uploadImage = result.secure_url
             });
+           
 
         asset.image = uploadImage     
     }

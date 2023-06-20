@@ -20,10 +20,11 @@ const handleUserAccount = async(req, res) => {
     if(req?.body?.username) user.userName = req.body.username;
     if(req?.body?.image){
         let uploadImage;
-
-        uploadImage =  cloudinary.uploader.upload(req.body?.image,
+        await cloudinary.uploader.upload(req.body?.image,
             { public_id: "nftart" }, 
-            function(error, result) { return (result.secure_url);
+            function(error, result) {
+                console.log (result.secure_url);
+                return uploadImage = result.secure_url 
             });
 
         user.image = uploadImage

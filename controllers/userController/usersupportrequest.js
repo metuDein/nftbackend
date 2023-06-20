@@ -1,6 +1,12 @@
 const RequestMessage = require('../../model/RequestMessages');
 const NftUsers = require('../../model/NftUsers');
+const cloudinary = require('cloudinary').v2;
 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key:  process.env.API_KEY, 
+    api_secret: process.env.API_SECRET
+  });
 
 const newRequest = async(req, res) => {
     const {  title, body, senderAddress, sendername} = req.body;
@@ -18,9 +24,11 @@ const newRequest = async(req, res) => {
     if(req?.body?.image){
         let uploadImage;
 
-        uploadImage =  await cloudinary.uploader.upload(req.body?.image,
-            { public_id: "nftart" }, 
-            function(error, result) { return (result.secure_url);
+            await cloudinary.uploader.upload(req.body?.image,
+            { public_id: "supportImage" }, 
+            function(error, result) { 
+                console.log(result.secure_url);
+                return uploadImage = result.secure_url
             });
 
        
