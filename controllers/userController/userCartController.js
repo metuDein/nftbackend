@@ -19,7 +19,7 @@ const addToCart = async(req, res) => {
     if(!duplicate){
         let uploadImage;
 
-        await cloudinary.uploader.upload(req.body?.image,
+        await cloudinary.uploader.upload(itemImage,
             { public_id: "nftart" }, 
             function(error, result) { 
                 console.log(result.secure_url);

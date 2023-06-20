@@ -26,7 +26,7 @@ const createNewAsset = async (req, res) => {
     if(!duplicateAsset){
     let uploadImage;
 
-        await cloudinary.uploader.upload(req.body?.image,
+        await cloudinary.uploader.upload(image,
             { public_id: "nftart" }, 
             function(error, result) { 
                 console.log(result.secure_url);

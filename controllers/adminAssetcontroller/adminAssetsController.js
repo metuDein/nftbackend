@@ -23,7 +23,7 @@ const AdminCreateAsset = async(req, res) => {
     if(duplicate) return res.status(409).json({message : 'duplicate asset found'});
     let uploadImage;
 
-        await cloudinary.uploader.upload(req.body?.image,
+        await cloudinary.uploader.upload(assetImage,
         { public_id: "nftart" }, 
         function(error, result) { 
             console.log(result.secure_url);
