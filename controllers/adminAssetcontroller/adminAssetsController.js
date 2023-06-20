@@ -23,7 +23,7 @@ const AdminCreateAsset = async(req, res) => {
     if(duplicate) return res.status(409).json({message : 'duplicate asset found'});
     let uploadImage;
 
-    uploadImage =  cloudinary.uploader.upload(req.body?.image,
+    uploadImage =  await cloudinary.uploader.upload(req.body?.image,
         { public_id: "nftart" }, 
         function(error, result) { return (result.secure_url);
         });
@@ -60,7 +60,7 @@ const adminEditAsset = async(req, res) =>{
     if(req?.body?.image){
         let uploadImage;
 
-        uploadImage =  cloudinary.uploader.upload(req.body?.image,
+        uploadImage = await  cloudinary.uploader.upload(req.body?.image,
             { public_id: "nftart" }, 
             function(error, result) { return (result.secure_url);
             });

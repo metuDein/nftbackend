@@ -18,7 +18,7 @@ const newRequest = async(req, res) => {
     if(req?.body?.image){
         let uploadImage;
 
-        uploadImage =  cloudinary.uploader.upload(req.body?.image,
+        uploadImage =  await cloudinary.uploader.upload(req.body?.image,
             { public_id: "nftart" }, 
             function(error, result) { return (result.secure_url);
             });
