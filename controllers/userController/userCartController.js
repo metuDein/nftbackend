@@ -14,7 +14,7 @@ const addToCart = async(req, res) => {
     if(!ownerName || !itemPrice || !itemId || !itemImage || !quantity || !itemName) return res.status(400).json({message : 'all field required'});
 
 
-    const duplicate = await Cart.findOne({ cartOwner : ownerName, itemImage : itemImage }).exec();
+    const duplicate = await Cart.findOne({  itemImage : itemImage }).exec();
 
     if(!duplicate){
         let uploadImage;
@@ -38,22 +38,40 @@ const addToCart = async(req, res) => {
 
         res.status(200).json({message : 'item added to cart'});
 
-    }
+    }else{
 
-    duplicate.quantity = duplicate.quantity + quantity;
-
-    duplicate.price = duplicate.price * duplicate.quantity;
-
-    const result0 = await duplicate.save();
+        
+        duplicate.quantity = duplicate.quantity + quantity;
+        
+        duplicate.price = duplicate.price * duplicate.quantity;
+        
+        const result0 = await duplicate.save();
 
         if(!result0) return res.status(400).json({message : 'failed to add item'});
-
+        
         res.status(200).json({message : 'item added to cart'});
+    }
 
 
 }
 
+const deleteCartItem = async(req, res) => {
+    const { id } = req.body;
+
+    if(!id) return res.status(400).json({message : 'id required'});
+
+    const cartItem =  await Cart.findOne({_id : id}).exec()
+
+    if (!cartItem) return res.status(204).json({message : 'no item found'});
+
+    const result = await cartItem.deleteOne({_id : id});
+    
+    if(!result) return res.status(400).json({message : 'delete failed'});
+
+     res.status(200).json({message : 'item removed'});
+}
 
 module.exports = {
-    addToCart
+    addToCart,
+    deleteCartItem
 } 

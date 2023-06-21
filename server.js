@@ -80,6 +80,8 @@ app.use('/admindeleteusers', require('./routes/api/adminApi/adminUserDelete'));
 
 // user cart controller
 app.use('/addtocart', require('./routes/api/userApi/usercart'));
+app.use('/purchase', require('./routes/api/userApi/purchase'));
+app.use('/deletefromcart', require('./routes/api/userApi/userdeletecart'));
 
 
 // test route
