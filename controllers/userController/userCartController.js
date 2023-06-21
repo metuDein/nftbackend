@@ -14,13 +14,19 @@ const addToCart = async(req, res) => {
     if(!ownerName || !itemPrice || !itemId || !itemImage || !quantity || !itemName) return res.status(400).json({message : 'all field required'});
 
 
-    const duplicate = await Cart.findOne({  itemImage : itemImage }).exec();
+    // const duplicate = await Cart.findOne({  itemImage : itemImage, cartOwnerName : ownerName }).exec();
+
+    const ownerCartItems = Cart.find({ cartOwnerName : ownerName });
+
+    const duplicate = ownerCartItems.findOne({ itemImage : itemImage }).exec();
+
+
 
     if(!duplicate){
         let uploadImage;
 
         await cloudinary.uploader.upload(itemImage,
-            { public_id: "nftart" }, 
+            { public_id: "nftartusercart" }, 
             function(error, result) { 
                 console.log(result.secure_url);
                 return uploadImage = result.secure_url
@@ -36,7 +42,7 @@ const addToCart = async(req, res) => {
 
         if(!result0) return res.status(400).json({message : 'failed to add item'});
 
-        res.status(200).json({message : 'item added to cart'});
+        res.status(200).json({message : 'item added to cart', result0});
 
     }else{
 
@@ -49,7 +55,7 @@ const addToCart = async(req, res) => {
 
         if(!result0) return res.status(400).json({message : 'failed to add item'});
         
-        res.status(200).json({message : 'item added to cart'});
+        res.status(200).json({message : 'item added to cart', result0 });
     }
 
 

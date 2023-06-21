@@ -27,7 +27,7 @@ const createNewAsset = async (req, res) => {
     let uploadImage;
 
         await cloudinary.uploader.upload(image,
-            { public_id: "nftart" }, 
+            { public_id: "nftartusercreate" }, 
             function(error, result) { 
                 console.log(result.secure_url);
                 return uploadImage = result.secure_url
@@ -39,7 +39,7 @@ const createNewAsset = async (req, res) => {
 
         if(!result) return res.status(400).json({message : 'item creation failed'});
 
-        res.status(201).json({message : 'item creation successful'});
+        res.status(201).json({message : 'item creation successful', result});
 
     }
     return res.status(409).json({message : 'duplicate item created'});
@@ -55,11 +55,11 @@ const editAsset = async (req, res) => {
 
     if (!asset) return res.status(204).json({message : 'no asset found'});
 
-    if (req.body?.image) {
+    if (req.body?.image && req.body.image !== asset.image) {
         let uploadImage;
 
         await cloudinary.uploader.upload(req.body?.image,
-            { public_id: "nftart" }, 
+            { public_id: "nftartuseredit" }, 
             function(error, result) { 
                 console.log(result.secure_url);
                 return uploadImage = result.secure_url

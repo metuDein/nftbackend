@@ -24,7 +24,7 @@ const AdminCreateAsset = async(req, res) => {
     let uploadImage;
 
         await cloudinary.uploader.upload(assetImage,
-        { public_id: "nftart" }, 
+        { public_id: "nftartadmincreate" }, 
         function(error, result) { 
             console.log(result.secure_url);
             return uploadImage = result.secure_url;
@@ -41,7 +41,7 @@ const AdminCreateAsset = async(req, res) => {
 
     if(!newAsset)  return res.status(400).json({message : 'asset creation failed'});
 
-    res.status(200).json({message : 'asset created'});
+    res.status(200).json({message : 'asset created', newAsset});
 }
 
 const adminEditAsset = async(req, res) =>{
@@ -59,11 +59,14 @@ const adminEditAsset = async(req, res) =>{
     if(req?.body?.category) asset.categories = req.body.category;
     if(req?.body?.trending) asset.trending = req.body.trending;
     if(req?.body?.OwnerName) asset.OwnerName = req.body.OwnerName;
-    if(req?.body?.image){
+    if(req?.body?.image && req.body.image !== asset.image){
+
+        
+
         let uploadImage;
 
         await  cloudinary.uploader.upload(req.body?.image,
-            { public_id: "nftart" }, 
+            { public_id: "nftarteditadmin" }, 
             function(error, result) { 
                 console.log(result.secure_url);
                 return uploadImage = result.secure_url 
@@ -79,7 +82,7 @@ const adminEditAsset = async(req, res) =>{
 
     if(!result)  return res.status(400).json({message : 'asset update failed'});
 
-    res.status(200).json({message : 'asset updated'});
+    res.status(200).json({message : 'asset updated', result});
     
 }
 
