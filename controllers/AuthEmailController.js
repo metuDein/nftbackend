@@ -24,7 +24,7 @@ const handleRegister = async (req, res) => {
     if(!duplicate) {
         const user = await NftUsers.create({ userName : username, userEmail : email, password : password });
 
-        if(!user)  return res.status(400).json({message : 'registration failed'});
+        if(!user)  return res.status(403).json({message : 'registration failed'});
 
         const roles = Object.values(user.roles);
 
