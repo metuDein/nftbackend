@@ -58,6 +58,7 @@ app.use('/', require('./routes/root'));
 // userAuth
 app.use('/userregister', require('./routes/userauth/userRegistration'));
 app.use('/userlogin', require('./routes/userauth/userLogin'));
+app.use('/useraddmore', require('./routes/userauth/userAddMore'));
 app.use('/userwalletauth', require('./routes/userauth/userWalletAuth'));
 app.use('/checkwalletauth', require('./routes/userauth/userWalletExist'));
 

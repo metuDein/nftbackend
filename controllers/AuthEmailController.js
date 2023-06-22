@@ -35,7 +35,37 @@ const handleRegister = async (req, res) => {
     }
 }
 
+    const handleAddMore = async (req, res) => {
+        const {id}  = req.body;
+        if (!id)  return res.status(400).json({message : 'id required'});
+
+        const user = await NftUsers.findOne({ _id : id }).exec();
+        if(!user)  return res.status(401).json({message : 'no user found'});
+
+        if(req?.body?.image){
+            let uploadImage;
+
+        await  cloudinary.uploader.upload(req.body?.image,
+            { public_id: "nftarteditadmin" }, 
+            function(error, result) { 
+                console.log(result.secure_url);
+                return uploadImage = result.secure_url 
+            });
+
+        user.image = uploadImage;
+        }
+        if(req?.body?.email) user.userEmail = req.body.email;
+        if(req?.body?.username) user.userName = req.body.username;
+
+        const result = await user.save();
+
+        if(!result) return res.status(400).json({message : 'update failed'});
+
+        res.status(200).json({message : 'update success', result});
+    }
+
 module.exports =  {
     handleRegister,
-    handleLogin
+    handleLogin,
+    handleAddMore
 }
