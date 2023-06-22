@@ -58,15 +58,31 @@ const editAsset = async (req, res) => {
     if (req.body?.image && req.body.image !== asset.image) {
         let uploadImage;
 
-        await cloudinary.uploader.upload(req.body?.image,
-            { public_id: "nftartuseredit" }, 
-            function(error, result) { 
-                console.log(result.secure_url);
-                return uploadImage = result.secure_url
+        // await cloudinary.uploader.upload(req.body?.image,
+        //     { public_id: "nftartuseredit" }, 
+        //     function(error, result) { 
+        //         console.log(result.secure_url);
+        //         return uploadImage = result.secure_url
+        //     });
+        
+        
+            //imgage = > base64
+            return new Promise((resolve, reject) => {
+              cloudinary.uploader.upload(req?.body?.image, opts, (error, result) => {
+                if (result && result.secure_url) {
+                  console.log(result.secure_url);
+                  uploadImage = result.secure_url; 
+                  asset.image = uploadImage     
+                  return resolve(result.secure_url);
+                }
+                console.log(error.message);
+                return reject({ message: error.message });
+              });
             });
-           
+       
 
-        asset.image = uploadImage     
+
+        return 
     }
     if (req.body?.name) asset.name = req.body.name
     if (req.body?.price) asset.price = req.body.price
