@@ -59,7 +59,7 @@ const adminEditAsset = async(req, res) =>{
     if(req?.body?.category) asset.categories = req.body.category;
     if(req?.body?.trending) asset.trending = req.body.trending;
     if(req?.body?.OwnerName) asset.OwnerName = req.body.OwnerName;
-    if(req?.body?.image && req.body.image !== asset.image){
+    if(req?.body?.image ){
 
         
 

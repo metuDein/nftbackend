@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.route('/')
 .post(AdminCreateAsset)
-.put(adminEditAsset)
+.patch(adminEditAsset)
 
 
 
