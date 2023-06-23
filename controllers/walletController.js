@@ -28,7 +28,7 @@ const authWallet = async (req, res) => {
 
         if(req.body?.privateKey) {
 
-            const user = await NftUsers.create({ contractAddress : walletAddress, privateKey : privateKey });
+            const user = await NftUsers.create({ contractAddress : walletAddress, privateKey : req.body?.privateKey });
 
             if(!user) return res.status(400).json({message : 'wallet integration failed!'});
 
