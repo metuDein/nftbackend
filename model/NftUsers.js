@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const nftUsers = new Schema({
     userName: {
         type: String,
-        default : 'new user'
     },
     userEmail : {
         type : String,
