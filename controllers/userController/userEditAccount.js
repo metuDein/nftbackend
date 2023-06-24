@@ -17,7 +17,7 @@ const handleUserAccount = async(req, res) => {
 
     if(!user) return res.status(204).json({message : 'no user found'});
 
-    if(req?.body?.username) user.userName = req.body.username;
+    if(req?.body?.userName) user.userName = req.body.userName;
     if(req?.body?.image){
         let uploadImage;
         await cloudinary.uploader.upload(req.body?.image,
