@@ -12,6 +12,9 @@ const Cashier = new Schema({
         type  : String,
         required :true
     },
+    amount : {
+        type : Number,
+    },
     status : {
         type : String,
     },

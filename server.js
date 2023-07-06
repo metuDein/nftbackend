@@ -49,6 +49,7 @@ app.use('/getallassets', require('./routes/frontend/getAllAssets'));
 app.use('/getallcartitems', require('./routes/frontend/getAllcartItems'));
 app.use('/getallusers', require('./routes/frontend/getAllUsers'));
 app.use('/getallmessages', require('./routes/frontend/getAllMessages'));
+app.use('/getallblogpost', require('./routes/frontend/getAllBlogPost'));
 app.use('/', require('./routes/root'));
 
 
@@ -66,10 +67,16 @@ app.use('/checkwalletauth', require('./routes/userauth/userWalletExist'));
 
 // api lockdown
 app.use('/userassets', require('./routes/api/userApi/userAssets'));
+app.use('/cashier', require('./routes/api/userApi/cashier'));
+
 app.use('/userdeleteasset', require('./routes/api/userApi/userassetdelete'));
 app.use('/useraccount', require('./routes/api/userApi/useraccount'));
 app.use('/supportrequest', require('./routes/api/userApi/usersupportrequest'));
 app.use('/deletemessage', require('./routes/api/userApi/userDeleteMessage'));
+
+app.use('/writereview', require('./routes/api/userApi/reviews'));
+
+
 
 
 // admin api
@@ -77,6 +84,8 @@ app.use('/adminassets', require('./routes/api/adminApi/adminAssetControl'));
 app.use('/admindeleteassets', require('./routes/api/adminApi/adminAssetDelete'));
 app.use('/adminusers', require('./routes/api/adminApi/adminUserControl'));
 app.use('/admindeleteusers', require('./routes/api/adminApi/adminUserDelete'));
+app.use('/createblogpost', require('./routes/api/adminApi/blogtask'));
+app.use('/deleteblogpost', require('./routes/api/adminApi/blogDelete'));
 
 
 // user cart controller

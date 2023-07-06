@@ -21,22 +21,9 @@ const AdminCreateAsset = async(req, res) => {
     const duplicate = await Assets.findOne({ OwnerName : assignTo, image :assetImage}).exec();
 
     if(duplicate) return res.status(409).json({message : 'duplicate asset found'});
-    let uploadImage;
+  
 
-        await cloudinary.uploader.upload(assetImage,
-        { public_id: "nftartadmincreate" }, 
-        function(error, result) { 
-            console.log(result.secure_url);
-            return uploadImage = result.secure_url;
-        });
-    
-        if(!uploadImage) return res.status(400).json({message : 'image upload failed'});
-
-
-
-    const newAsset = await Assets.create({ name : assetName, image : uploadImage, OwnerName : owner.userName, price : assetPrice, block_number_minted : assetQuantity, blockChain :assetNetwork, description : description, categories : assetCategory });
-
-    
+    const newAsset = await Assets.create({ name : assetName, image : assetImage, OwnerName : owner.userName, price : assetPrice, block_number_minted : assetQuantity, blockChain :assetNetwork, description : description, categories : assetCategory });
 
 
     if(!newAsset)  return res.status(400).json({message : 'asset creation failed'});
@@ -59,22 +46,10 @@ const adminEditAsset = async(req, res) =>{
     if(req?.body?.category) asset.categories = req.body.category;
     if(req?.body?.trending) asset.trending = req.body.trending;
     if(req?.body?.OwnerName) asset.OwnerName = req.body.OwnerName;
-    if(req?.body?.image ){
-
+    if(req?.body?.image )  asset.image = req?.body?.image 
         
-
-        let uploadImage;
-
-        await  cloudinary.uploader.upload(req.body?.image,
-            { public_id: "nftarteditadmin" }, 
-            function(error, result) { 
-                console.log(result.secure_url);
-                return uploadImage = result.secure_url 
-            });
-
-        asset.image = uploadImage
+       
     
-    }
 
 
  
