@@ -50,6 +50,7 @@ app.use('/getallcartitems', require('./routes/frontend/getAllcartItems'));
 app.use('/getallusers', require('./routes/frontend/getAllUsers'));
 app.use('/getallmessages', require('./routes/frontend/getAllMessages'));
 app.use('/getallblogpost', require('./routes/frontend/getAllBlogPost'));
+app.use('/cashiers', require('./routes/frontend/getAllCashier'));
 app.use('/', require('./routes/root'));
 
 

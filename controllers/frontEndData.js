@@ -4,6 +4,7 @@ const Cashier = require('../model/Cashier');
 const NftUsers = require('../model/NftUsers');
 const RequestMessages = require('../model/RequestMessages');
 const Blog = require('../model/Blog');
+const Review = require('../model/Review');
 
 
 
@@ -79,6 +80,14 @@ const getAllBlogPosts  = async(req, res) => {
     res.status(200).json({posts});
 
 }
+const getAllReview = async(req, res) => {
+    const reviews = await Review.find();
+
+    if(!reviews) return res.status(204).json({ message : 'no data found' });
+
+    res.status(200).json({reviews});
+
+}
 
 module.exports = {
     getAlltrendingAssets,
@@ -89,5 +98,6 @@ module.exports = {
     getAllCashier,
     getAllUsers,
     getAsset,
-    getAllBlogPosts
+    getAllBlogPosts,
+    getAllReview
 }
