@@ -21,7 +21,26 @@ const newRequest = async(req, res) => {
 
     if(!newRequest) return res.status(400).json({message : 'request failed'});
 
-    if(req?.body?.image) newRequest.image = req?.body?.image
+    if(req?.body?.image){
+
+        const uniqueID = Date.now()
+
+        let uploadImg;
+    
+        cloudinary.uploader.upload(req?.body?.image,
+            { public_id: uniqueID },
+            function (error, result) { 
+                console.log(result.url);
+                uploadImg  = result.url
+                console.log(uploadImg);
+    
+              if(!uploadImg) return res.status(400).json({message : "image upload failed"})
+    
+            });
+
+
+        newRequest.image = uploadImg;
+    } 
     if(req?.body.itemName) newRequest.asset = req.body.itemName
     if(req?.body?.receiver) newRequest.reciever = req.body.receiver
 

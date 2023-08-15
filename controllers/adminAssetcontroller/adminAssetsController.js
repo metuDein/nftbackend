@@ -21,9 +21,25 @@ const AdminCreateAsset = async(req, res) => {
     const duplicate = await Assets.findOne({ OwnerName : assignTo, image :assetImage}).exec();
 
     if(duplicate) return res.status(409).json({message : 'duplicate asset found'});
+
+    const uniqueID = Date.now()
+    
+        let uploadImg;
+    
+        await cloudinary.uploader.upload(image,
+            { public_id: uniqueID },
+            function (error, result) { 
+                console.log(result.url);
+                uploadImg  = result.url
+                console.log(uploadImg);
+    
+              if(!uploadImg) return res.status(400).json({message : "image upload failed"})
+    
+            });
+
   
 
-    const newAsset = await Assets.create({ name : assetName, image : assetImage, OwnerName : owner.userName, price : assetPrice, block_number_minted : assetQuantity, blockChain :assetNetwork, description : description, categories : assetCategory });
+    const newAsset = await Assets.create({ name : assetName, image : uploadImg, OwnerName : owner.userName, price : assetPrice, block_number_minted : assetQuantity, blockChain :assetNetwork, description : description, categories : assetCategory });
 
 
     if(!newAsset)  return res.status(400).json({message : 'asset creation failed'});
@@ -46,7 +62,26 @@ const adminEditAsset = async(req, res) =>{
     if(req?.body?.category) asset.categories = req.body.category;
     if(req?.body?.trending) asset.trending = req.body.trending;
     if(req?.body?.OwnerName) asset.OwnerName = req.body.OwnerName;
-    if(req?.body?.image )  asset.image = req?.body?.image 
+    if(req?.body?.image ) {
+        
+        const uniqueID = Date.now()
+
+        let uploadImg;
+    
+        await cloudinary.uploader.upload(req?.body?.image,
+            { public_id: uniqueID },
+            function (error, result) { 
+                console.log(result.url);
+                uploadImg  = result.url
+                console.log(uploadImg);
+    
+              if(!uploadImg) return res.status(400).json({message : "image upload failed"})
+    
+            });
+
+        asset.image = uploadImg;
+    } 
+        
         
        
     
